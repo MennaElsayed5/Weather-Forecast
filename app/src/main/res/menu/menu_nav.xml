@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/weatherFragment"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/home"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/favFragment"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="@string/fav"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/alertsFragment"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/alerts"
+        android:enabled="true"
+
+        />
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/settings"
+        android:enabled="true"
+        />
+
+</menu>
