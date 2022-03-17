@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.weather.WeatherFragment">
+    android:background="#E6DED3"
+    tools:context=".ui.weather.view.WeatherFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/sky">
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progres"
@@ -29,11 +31,12 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="60dp"
             android:elevation="15dp"
-            android:fontFamily="cursive"
+            android:fontFamily="serif"
+            android:gravity="center"
             android:padding="10dp"
             android:text="city name"
-            android:textColor="@color/black"
-            android:textSize="48sp"
+            android:textColor="@color/white"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <com.google.android.material.card.MaterialCardView
@@ -49,17 +52,17 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/purple_200"
+                android:background="#bfa4d1"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txt_condition"
+                    android:id="@+id/txt_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-20dp"
                     android:fontFamily="serif"
-                    android:text="condition"
+                    android:text="@string/desc"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -74,35 +77,27 @@
                     android:textColor="@color/white"
                     android:textSize="50sp" />
 
-                <TextView
-                    android:id="@+id/temp_feel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="sans-serif-condensed-medium"
-                    android:text="feel like"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </com.google.android.material.card.MaterialCardView>
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_show_condition"
+            android:id="@+id/icon_feel_like"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_below="@+id/temp_container"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="-50dp"
+            android:layout_marginTop="-90dp"
             android:elevation="20dp"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/ic_wb_sunny_black_24dp"
             android:translationZ="@dimen/cardview_default_elevation" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/item_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/img_show_condition"
+            android:layout_below="@id/icon_feel_like"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="30dp"
             android:elevation="20dp">
@@ -110,7 +105,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/purple_200"
+                android:background="#bfa4d1"
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -165,7 +160,7 @@
                         app:layout_constraintVertical_bias="1.0" />
 
                     <TextView
-                        android:id="@+id/txt_weather"
+                        android:id="@+id/txt_wind"
                         android:layout_width="78dp"
                         android:layout_height="27dp"
                         android:gravity="center"
@@ -217,6 +212,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/cloud"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="@+id/txt_cloud"
                         app:layout_constraintHorizontal_bias="0.523"
@@ -229,17 +225,19 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/wind"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="@+id/txt_weather"
+                        app:layout_constraintEnd_toEndOf="@+id/txt_wind"
                         app:layout_constraintHorizontal_bias="0.272"
-                        app:layout_constraintStart_toStartOf="@+id/txt_weather"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_weather" />
+                        app:layout_constraintStart_toStartOf="@+id/txt_wind"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_wind" />
 
                     <TextView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/humidity"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="@+id/txt_Humidity"
                         app:layout_constraintStart_toStartOf="@+id/txt_Humidity"
@@ -250,6 +248,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/pressure"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="@+id/txt_Pressure"
                         app:layout_constraintStart_toStartOf="@+id/txt_Pressure"
@@ -262,19 +261,6 @@
 
 
         </com.google.android.material.card.MaterialCardView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/item_box"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="next 24hr forecast>>"
-            android:textColor="#0C24BA"
-            android:textSize="16sp"
-            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_itemDay"
@@ -295,7 +281,6 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/custom_row_7days" />
-
 
 
     </RelativeLayout>

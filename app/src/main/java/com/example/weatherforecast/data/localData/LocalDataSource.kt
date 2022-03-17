@@ -1,29 +1,36 @@
 package com.example.weatherforecast.data.localData
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import com.example.weatherforecast.model.Weather
+import com.example.weatherforecast.model.WeatherRespond
 
-class LocalDataSource {
-    var dao: Dao
+class LocalDataSource (private val dao: Dao) : InterfaceLocalDataSource {
 
-    constructor(application: Application) {
-        dao = DataBase.getDatabase(application).dao()
-    }
-
-    fun getAllWeather(): LiveData<List<Weather>> {
+    override fun getAllWeather(): LiveData<List<WeatherRespond>> {
         return dao.getAllWeather()
     }
 
-    fun getWeather(lat: String, lng: String): Weather {
-        return dao.getWeatherApi(lat, lng)
+    override fun getWeather(timezone:String): WeatherRespond {
+        return dao.getWeatherApi(timezone)
     }
 
-    suspend fun insert(weather: Weather?) {
+    override fun getListWeather(): List<WeatherRespond> {
+        return dao.getListWeather()
+    }
+
+    override fun getWeatherByLatAndLon(lat: String, lng: String): LiveData<WeatherRespond> {
+        return dao.getWeatherByLatLon(lat, lng)
+    }
+
+
+    override suspend fun insert(weather: WeatherRespond?) {
         weather?.let { dao.insert(it) }
     }
 
-    suspend fun deleteWeather(lat: String, lng: String) {
+    override suspend fun update(weather: WeatherRespond?){
+        weather?.let { dao.update(it) }
+    }
+
+    override suspend fun deleteWeather(lat: String, lng: String) {
         dao.deleteWeather(lat, lng)
     }
 }

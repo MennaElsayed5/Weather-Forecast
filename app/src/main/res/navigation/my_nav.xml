@@ -7,22 +7,43 @@
 
     <fragment
         android:id="@+id/weatherFragment"
-        android:name="com.example.weatherforecast.ui.weather.WeatherFragment"
+        android:name="com.example.weatherforecast.ui.weather.view.WeatherFragment"
         android:label="weather_fragment"
         tools:layout="@layout/weather_fragment" />
     <fragment
         android:id="@+id/favFragment"
-        android:name="com.example.weatherforecast.ui.Fav.FavFragment"
+        android:name="com.example.weatherforecast.ui.Fav.view.FavFragment"
         android:label="fav_fragment"
-        tools:layout="@layout/fav_fragment" />
+        tools:layout="@layout/fav_fragment" >
+        <action
+            android:id="@+id/action_favFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_favFragment_to_favDetailsFragment"
+            app:destination="@id/favDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/alertsFragment"
-        android:name="com.example.weatherforecast.ui.alerts.AlertsFragment"
+        android:name="com.example.weatherforecast.ui.alerts.view.AlertsFragment"
         android:label="alerts_fragment"
         tools:layout="@layout/alerts_fragment" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.weatherforecast.ui.settings.SettingsFragment"
+        android:name="com.example.weatherforecast.ui.settings.view.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.weatherforecast.ui.Fav.view.MapsFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapFragment_to_favFragment"
+            app:destination="@id/favFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favDetailsFragment"
+        android:name="com.example.weatherforecast.ui.weather.view.FavDetailsFragment"
+        android:label="fragment_fav_details"
+        tools:layout="@layout/fragment_fav_details" />
 </navigation>

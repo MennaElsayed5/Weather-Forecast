@@ -1,6 +1,7 @@
 package com.example.weatherforecast.data.remoteData
 
 import com.example.weatherforecast.model.Weather
+import com.example.weatherforecast.model.WeatherRespond
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -16,6 +17,7 @@ interface WeatherApi {
         @Query("units") units: String,
         @Query("lang") lang: String,
         @Query("appid") appid: String = app_id
-    ): Response<Weather>
+    ): Response<WeatherRespond>
+
 
 }
