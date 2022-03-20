@@ -3,18 +3,21 @@ package com.example.weatherforecast.data.localData
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.Dao
+import com.example.weatherforecast.model.Alarm
+import com.example.weatherforecast.model.Alerts
 import com.example.weatherforecast.model.Weather
 import com.example.weatherforecast.model.WeatherRespond
+
 @Dao
 interface Dao {
     @Query("SELECT * FROM weather")
     fun getAllWeather(): LiveData<List<WeatherRespond>>
 
     @Query("SELECT * FROM weather")
-    fun getListWeather():List<WeatherRespond>
+    fun getListWeather(): List<WeatherRespond>
 
     @Query("SELECT * FROM weather WHERE timezone = :timezone ")
-    fun getWeatherApi(timezone:String): WeatherRespond
+    fun getWeatherApi(timezone: String): WeatherRespond
 
     @Query("SELECT * FROM weather WHERE lat=:lat AND lon=:lng ")
     fun getWeatherByLatLon(lat: String, lng: String): LiveData<WeatherRespond>
@@ -26,15 +29,25 @@ interface Dao {
     suspend fun insert(weather: WeatherRespond)
 
     @Update
-   suspend fun update(weather: WeatherRespond)
+    suspend fun update(weather: WeatherRespond)
 
     @Query("DELETE FROM Weather")
     suspend fun deleteAll()
 
     @Query("DELETE FROM weather WHERE  lat=:lat AND lon=:lon")
     suspend fun deleteWeather(lat: String, lon: String)
-
-//    @Delete
+    //    @Delete
 //    suspend fun delete(weather: Weather): Void
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+   suspend fun insertAlarm(alarm: Alarm) :Long
+
+    @Query("SELECT * FROM Alarms")
+    fun getAlarm(): LiveData<List<Alarm>>
+    @Query("SELECT * FROM Alarms WHERE id=:id")
+    fun getAlarmId(id:Int):Alarm
+
+    @Delete
+    fun deleteAlarm(alarm: Alarm)
 
 }

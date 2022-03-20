@@ -28,13 +28,8 @@
     <string name="meter_sec">meter/sec</string>
     <string name="miles_hour">miles/hour</string>
     <string name="wind_speed">wind speed</string>
-    <string name="Saturday" />
-    <string name="Sunday" />
-    <string name="Monday" />
-    <string name="Tuesday" />
-    <string name="Wednesday" />
-    <string name="Friday" />
-    <string name="Thursday" />
     <string name="maxdegree">maxDegree</string>
     <string name="desc">desc</string>
+    <string name="title_activity_splash">Weather Forecast</string>
+    <string name="weather_forecast">Weather Forecast</string>
 </resources>

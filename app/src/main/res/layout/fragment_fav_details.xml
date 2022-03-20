@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6DED3"
+    android:background="@drawable/uwp319288"
     tools:context=".ui.weather.view.FavDetailsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/e7cadcba766c75699a566c1c7933e517">
+        >
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progres"
@@ -52,7 +52,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/purple_200"
+                android:background="#e3b9fb"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -105,7 +105,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/purple_200"
+                android:background="#e3b9fb"
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout

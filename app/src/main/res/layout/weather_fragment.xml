@@ -4,26 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6DED3"
+    android:background="@drawable/uwp319288"
     tools:context=".ui.weather.view.WeatherFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/sky">
-
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/progres"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:elevation="25dp"
-            android:indeterminate="true"
-            android:indeterminateBehavior="cycle"
-            android:visibility="gone"
-            app:indicatorColor="#E6B70D"
-            app:trackColor="@color/black" />
-
+        >
         <TextView
             android:id="@+id/city_name"
             android:layout_width="wrap_content"
@@ -52,7 +39,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#bfa4d1"
+                android:background="#e3b9fb"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -105,7 +92,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#bfa4d1"
+                android:background="#e3b9fb"
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -118,10 +105,11 @@
                         android:id="@+id/img_cloud"
                         android:layout_width="64dp"
                         android:layout_height="33dp"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
                         android:src="@drawable/ic_cloud_black_24dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.174"
+                        app:layout_constraintHorizontal_bias="0.169"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -129,7 +117,7 @@
                         android:id="@+id/img_wind"
                         android:layout_width="64dp"
                         android:layout_height="33dp"
-                        android:layout_marginStart="68dp"
+                        android:layout_marginStart="42dp"
                         android:src="@drawable/ic_air_black_24dp"
                         app:layout_constraintBottom_toBottomOf="@+id/img_cloud"
                         app:layout_constraintStart_toEndOf="@+id/img_cloud"
@@ -151,7 +139,7 @@
                         android:id="@+id/img_Humidity"
                         android:layout_width="64dp"
                         android:layout_height="33dp"
-                        android:layout_marginStart="68dp"
+                        android:layout_marginStart="42dp"
                         android:layout_marginTop="8dp"
                         android:src="@drawable/ic_water_drop_black_24dp"
                         app:layout_constraintBottom_toBottomOf="@+id/img_Pressure"
@@ -281,6 +269,7 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/custom_row_7days" />
+
 
 
     </RelativeLayout>

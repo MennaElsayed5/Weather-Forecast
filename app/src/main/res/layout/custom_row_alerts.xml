@@ -2,32 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    app:cardCornerRadius="30dp"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/delete_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_delete_black_24dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toStartOf="@+id/edit_btn"
-        app:layout_constraintHorizontal_bias="0.802"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:elevation="3dp"/>
-    <ImageView
-        android:id="@+id/edit_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_edit_black_24dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintVertical_bias="0.0"
-        android:elevation="3dp"/>
 
     <androidx.cardview.widget.CardView
         app:layout_constraintTop_toTopOf="parent"
@@ -36,14 +15,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="10dp"
+
         app:cardBackgroundColor="@color/purple_200"
         android:elevation="8dp"
-        app:cardCornerRadius="3dp">
+        app:cardCornerRadius="30dp"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fixed_layout"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="74dp"
             android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,29 +35,54 @@
 
 
             <TextView
-                android:id="@+id/alarmType"
-                android:layout_width="140dp"
-                android:layout_height="36dp"
-                android:textColor="@color/white"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/details"
-                app:layout_constraintStart_toStartOf="@+id/details"
-                app:layout_constraintTop_toBottomOf="@+id/details"
-                />
-
-            <TextView
-                android:id="@+id/details"
-                android:layout_width="142dp"
-                android:layout_height="33dp"
-                android:layout_marginTop="4dp"
+                android:id="@+id/start"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.166"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="@+id/data"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/data"
+                app:layout_constraintTop_toBottomOf="@+id/data" />
+
+            <TextView
+                android:id="@+id/data"
+                android:layout_width="160dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="12dp"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/alert"
+                app:layout_constraintStart_toEndOf="@+id/alert"
                 app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/delete_btn"
+                android:layout_width="55dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="68dp"
+                android:elevation="3dp"
+
+                android:src="@drawable/ic_delete_black_24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/start"
+                app:layout_constraintStart_toEndOf="@+id/data"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.615" />
+
+            <ImageView
+                android:id="@+id/alert"
+                android:layout_width="55dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                android:elevation="3dp"
+                android:src="@drawable/ic_alarm_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.044"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -29,6 +29,17 @@ class Repository private constructor(
                 }
             }
         }
+
+        fun getRepoInstance(context: Context): Repository {
+            return INSTANCE ?: synchronized(this) {
+                Repository(
+                    LocalDataSource(DataBase.getDatabase(context).dao()),
+                    NetworkApi
+                ).also {
+                    INSTANCE = it
+                }
+            }
+        }
     }
 
     lateinit var liveDataWeather: LiveData<List<WeatherRespond>>
@@ -77,7 +88,14 @@ class Repository private constructor(
     }
 
     override suspend fun insert(weather: WeatherRespond?) {
-        localData.insert(weather)
+        val exceptionHandlerException = CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+            Log.i("id", "exception")
+        }
+        CoroutineScope(Dispatchers.IO + exceptionHandlerException).launch {
+            localData.insert(weather)
+
+        }
     }
 
     override suspend fun update(weather: WeatherRespond?) {
@@ -102,6 +120,30 @@ class Repository private constructor(
             return response.body()!!
         } else
             throw Exception("${response.errorBody()}")
+    }
+
+    override fun getAlarmId(id: Int): Alarm {
+        return localData.getAlarmId(id)
+    }
+
+    var ins: Long = 0
+    suspend fun insertAlarm(alarm: Alarm): Long {
+        val job = CoroutineScope(Dispatchers.IO).launch {
+            ins = localData.insertAlarm(alarm)
+        }
+        job.join()
+        return ins
+    }
+
+    fun getAlarm(): LiveData<List<Alarm>> {
+
+        return localData.getAlarm()
+    }
+
+    fun deleteAlarm(alarm: Alarm) {
+        CoroutineScope(Dispatchers.IO).launch {
+            localData.deleteAlarm(alarm)
+        }
     }
 
     fun refresh() {

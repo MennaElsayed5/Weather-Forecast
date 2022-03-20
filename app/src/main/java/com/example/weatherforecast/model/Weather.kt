@@ -1,12 +1,10 @@
 package com.example.weatherforecast.model
 
-import android.os.Parcelable
-import androidx.annotation.Keep
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
+
 @Entity(tableName = "Weather")
 data class WeatherRespond(
     @SerializedName("lat") val lat : Double,
@@ -20,7 +18,7 @@ data class WeatherRespond(
     @SerializedName("daily") val daily : List<Daily>,
     @SerializedName("alerts") val alerts : List<Alerts>?
 
-):Serializable
+)
 data class Current (
 
     @SerializedName("dt") val dt : Int,

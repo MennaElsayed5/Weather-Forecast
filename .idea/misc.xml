@@ -6,7 +6,13 @@
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.181" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_add_black_24dp.xml" value="0.181" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_air_black_24dp.xml" value="0.1585" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_alarm_black_24dp.xml" value="0.1345" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_backgroungSky_background.xml" value="0.1655" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_backgroungSky_foreground.xml" value="0.154" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_cloud_black_24dp.xml" value="0.181" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_cloudy_day_weather_svgrepo_com.xml" value="0.154" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_delete_black_24dp.xml" value="0.2055" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_edit_black_24dp.xml" value="0.2055" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_favorite_black_24dp.xml" value="0.181" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.181" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_launcher_background.xml" value="0.181" />
@@ -16,19 +22,26 @@
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_water_drop_black_24dp.xml" value="0.181" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/drawable/ic_wb_sunny_black_24dp.xml" value="0.181" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/alert_dailog.xml" value="0.25416666666666665" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/alert_window.xml" value="0.25416666666666665" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/alerts_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/custom_row_7days.xml" value="0.25416666666666665" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/custom_row_alerts.xml" value="0.25416666666666665" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/custom_row_current_day.xml" value="0.25416666666666665" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/custom_row_fav.xml" value="0.25416666666666665" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/fav_fragment.xml" value="0.25416666666666665" />
-        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/fragment_fav_details.xml" value="0.1" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/fragment_fav_details.xml" value="0.16" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/fragment_maps.xml" value="0.25416666666666665" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/fragment_settings.xml" value="0.25416666666666665" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/settings_fragment.xml" value="0.24010416666666667" />
-        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/weather_fragment.xml" value="0.2" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/layout/weather_fragment.xml" value="0.264" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/menu/bottom_nav.xml" value="0.25416666666666665" />
         <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/menu/menu_nav.xml" value="0.25416666666666665" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/mipmap-anydpi-v26/ic_backgroungSky.xml" value="0.1655" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/mipmap-anydpi-v26/ic_backgroungSky_round.xml" value="0.1655" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1655" />
+        <entry key="..\:/androuid projects/WeatherForecast/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1655" />
       </map>
     </option>
   </component>

@@ -13,4 +13,8 @@ interface RepoInterface {
     suspend fun insert(weather: WeatherRespond?)
     suspend fun update(weather: WeatherRespond?)
     suspend fun getCurrentWeatherData(lat: String, lon: String, exclude: String, units: String, lang: String, ): WeatherRespond
+//    suspend fun insertAlarm(alarm: Alarm)
+//    fun getAlarm(): LiveData<MutableList<Alarm>>
+//    fun deleteAlarm(alarm: Alarm)
+fun getAlarmId(id:Int):Alarm
 }

@@ -25,7 +25,6 @@ class WeatherViewModel(private val repository: Repository) : ViewModel() {
     ) {
 
         val job = viewModelScope.launch(Dispatchers.IO) {
-//            lat = sharedPreferences.getString("lat","0").toString()
             respond = repository.getCurrentWeatherData(lat, lon, exclude, units, lang)
             repository.insert(respond)
 

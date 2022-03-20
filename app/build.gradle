@@ -31,9 +31,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding true
     }
+
 }
 
 dependencies {
@@ -90,5 +92,12 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation 'com.google.android.gms:play-services-location:19.0.1'
+
+    implementation "com.airbnb.android:lottie:4.2.0"
+    implementation("androidx.core:core-ktx:1.7.0")
+
+    def work_version = '2.0.1'
+    // use -ktx for Kotlin+Coroutines
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
 }

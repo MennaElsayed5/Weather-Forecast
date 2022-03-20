@@ -6,22 +6,25 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.example.weatherforecast.MainActivity
-import com.example.weatherforecast.R
+import com.example.weatherforecast.Util.GPSLocation
 import com.example.weatherforecast.databinding.FragmentSettingsBinding
 import com.example.weatherforecast.ui.settings.viewModel.SettingsViewModel
 import java.util.*
 
 class SettingsFragment : Fragment() {
-    lateinit var binding:FragmentSettingsBinding
-    lateinit var sharedPref: SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
-    lateinit var settingViewModel:SettingsViewModel
+    private lateinit var binding: FragmentSettingsBinding
+    private lateinit var sharedPref: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+    private lateinit var settingViewModel: SettingsViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPref = requireActivity().getSharedPreferences("weather", Context.MODE_PRIVATE)
@@ -38,69 +41,92 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var lang=sharedPref.getString("lang","en")
-        var unit=sharedPref.getString("units","metric")
+        val lang = sharedPref.getString("lang", "en")
+        val unit = sharedPref.getString("units", "metric")
+       val lat = sharedPref.getString("lat", "0").toString()
+       val lon = sharedPref.getString("lon", "0").toString()
+        var location = sharedPref.getString("location", "GPS")
         when (lang) {
-            "en" -> binding.radioButtonEn.isChecked=true
-            "ar" -> binding.radioButtonAr.isChecked=true
+            "en" -> binding.radioButtonEn.isChecked = true
+            "ar" -> binding.radioButtonAr.isChecked = true
         }
         when (unit) {
-            "metric" -> binding.radioButtonC.isChecked=true
-            "imperial" -> binding.radioButtonF.isChecked=true
-            "standard" -> binding.radioButtonK.isChecked=true
+            "metric" -> binding.radioButtonC.isChecked = true
+            "imperial" -> binding.radioButtonF.isChecked = true
+            "standard" -> binding.radioButtonK.isChecked = true
         }
-        binding.radioButtonEn.setOnClickListener(View.OnClickListener {
+
+        if(lat=="0"&&lon=="0"){
+            binding.radioButtonGps.isChecked = true
+
+        }else{
+            binding.radioButtonMap.isChecked = true
+        }
+        binding.radioButtonEn.setOnClickListener {
             changeLang("en")
-        })
-        binding.radioButtonAr.setOnClickListener(View.OnClickListener {
+        }
+        binding.radioButtonAr.setOnClickListener {
             changeLang("ar")
-        })
-        binding.radioButtonC.setOnClickListener(View.OnClickListener {
+        }
+        binding.radioButtonC.setOnClickListener {
             changeUnit("metric")
-        })
-        binding.radioButtonK.setOnClickListener(View.OnClickListener {
+        }
+        binding.radioButtonK.setOnClickListener {
             changeUnit("standard")
-        })
-        binding.radioButtonF.setOnClickListener(View.OnClickListener {
+        }
+        binding.radioButtonF.setOnClickListener {
             changeUnit("imperial")
-        })
+        }
+        binding.radioButtonMap.setOnClickListener {
+            Navigation.findNavController(view)
+                .navigate(SettingsFragmentDirections.actionSettingsFragmentToMapFragment())
+            Toast.makeText(requireContext(), "from settings Map", Toast.LENGTH_LONG).show()
 
-
+        }
+        binding.radioButtonGps.setOnClickListener {
+//            gpsLocation.findDeviceLocation(requireActivity())
+            editor.putString("lat", "0")
+           editor.putString("lon", "0")
+            editor.apply()
+            Navigation.findNavController(view)
+                .navigate(SettingsFragmentDirections.actionSettingsFragmentToWeatherFragment())
+            Toast.makeText(requireContext(), "enable gps", Toast.LENGTH_LONG).show()
+        }
 
     }
-    companion object {
 
-    }
 
-    private fun changeLang(lang:String){
-        editor.putString("lang",lang)
+    private fun changeLang(lang: String) {
+        editor.putString("lang", lang)
         editor.commit()
         settingViewModel.refreshData()
         setLocale(lang)
         restartApp()
     }
-    private fun changeUnit(unit:String){
-        editor.putString("units",unit)
+
+    private fun changeUnit(unit: String) {
+        editor.putString("units", unit)
         editor.commit()
         settingViewModel.refreshData()
         restartApp()
     }
-    private fun restartApp()
-    {
+
+    private fun restartApp() {
         val intent = Intent(context, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
         Runtime.getRuntime().exit(0)
 
     }
-    fun setLocale(languageCode: String?) {
+
+    private fun setLocale(languageCode: String?) {
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
         val resources: Resources = requireActivity().resources

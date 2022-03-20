@@ -3,6 +3,7 @@ package com.example.weatherforecast.ui.weather.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.location.Address
@@ -12,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,8 +23,11 @@ import com.example.weatherforecast.Util.GPSLocation
 import com.example.weatherforecast.Util.Helper
 import com.example.weatherforecast.databinding.WeatherFragmentBinding
 import com.example.weatherforecast.model.Repository
+import com.example.weatherforecast.model.WeatherRespond
 import com.example.weatherforecast.ui.weather.viewModel.ViewModelFactory
 import com.example.weatherforecast.ui.weather.viewModel.WeatherViewModel
+import com.google.android.material.snackbar.Snackbar
+import java.io.IOException
 import java.util.*
 
 class WeatherFragment : Fragment() {
@@ -32,6 +37,7 @@ class WeatherFragment : Fragment() {
     }
     private var gpsLocation: GPSLocation = GPSLocation()
     private val TAG = "WeatherFragment"
+    private lateinit var geocoder: Geocoder
     private val dayAdapter = DayAdapter(arrayListOf())
     private val weekAdapter = WeekAdapter(arrayListOf())
     private lateinit var sharedPreferences: SharedPreferences
@@ -40,6 +46,7 @@ class WeatherFragment : Fragment() {
     lateinit var lon: String
     lateinit var lang: String
     private lateinit var unit: String
+    private lateinit var location: String
     private lateinit var tempUnit: String
     lateinit var windSpeedUnit: String
 
@@ -53,71 +60,95 @@ class WeatherFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        gpsLocation.findDeviceLocation(requireActivity())
         sharedPreferences = requireActivity().getSharedPreferences("weather", Context.MODE_PRIVATE)
         editor = sharedPreferences.edit()
-        lat=sharedPreferences.getString("lat","0").toString()
-        lon=sharedPreferences.getString("lat","0").toString()
+        lat = sharedPreferences.getString("lat", "0").toString()
+        lon = sharedPreferences.getString("lon", "0").toString()
         lang = sharedPreferences.getString("lang", "en").toString()
         unit = sharedPreferences.getString("units", "metric").toString()
+        location = sharedPreferences.getString("location", "GPS").toString()
         setLocale(lang)
         setUnits(unit)
-        gpsLocation.findDeviceLocation(requireActivity())
-        editor.commit()
+//        editor.commit()
 
     }
+
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i(TAG, "onViewCreated gps: " + gpsLocation.getLatitude() + gpsLocation.getLongitude())
-        if(Helper.isNetworkAvailable(requireContext()))
-        {
-            viewModel.insertWeatherData(
-//                "30.5965", "32.2715",
-                gpsLocation.getLatitude().toString(),
-                gpsLocation.getLongitude().toString(),
-                "minutely",
-                unit,
-                lang
-            )
+        if (Helper.isNetworkAvailable(requireContext())) {
+
+            if (lat.equals("0") || lon.equals("0")) {
+                gpsLocation.locationList.observe(viewLifecycleOwner){
+                    if(!it.isNullOrEmpty()){
+                        viewModel.insertWeatherData(
+                            gpsLocation.getLatitude().toString(),
+                            gpsLocation.getLongitude().toString(),
+                            "minutely",
+                            unit,
+                            lang
+                        )
+                    }
+                    else{
+                        Toast.makeText(requireContext(),"error",Toast.LENGTH_LONG).show()
+                    }
+                }
+            } else {
+                viewModel.insertWeatherData(
+                    lat,
+                    lon,
+                    "minutely",
+                    unit,
+                    lang
+                )
+            }
+        } else {
+            Snackbar.make(requireContext(), view, "not connection", Snackbar.LENGTH_INDEFINITE)
+                .show()
         }
 
         viewModel.liveDataWeather.observe(viewLifecycleOwner) {
-            binding.cityName.text = getCityText(
-                gpsLocation.getLatitude()!!.toDouble(),
-                gpsLocation.getLongitude()!!.toDouble()
-//                30.5965, 32.2715
-            )
-            binding.txtDesc.text = it.current.weather[0].description
-            binding.iconFeelLike.setImageResource(getIcon(it.current.weather[0].icon))
-            if(lang.equals("en")) {
-                binding.tempTxt.text = it.current.temp.toInt().toString() + "°"
-                binding.txtCloud.text = it.current.clouds.toString()
-                binding.txtWind.text = it.current.wind_speed.toString()
-                binding.txtPressure.text = it.current.pressure.toString()
-                binding.txtHumidity.text = it.current.humidity.toString()
+            if (it != null) {
+                if (lat .equals("0") || lon.equals("0")) {
+                    binding.cityName.text = getCityName(gpsLocation.getLatitude()!!.toDouble(),
+                        gpsLocation.getLongitude()!!.toDouble())
+                } else {
+                    binding.cityName.text = getCityName(it.lat,it.lon)
+                }
+                binding.txtDesc.text = it.current.weather[0].description
+                binding.iconFeelLike.setImageResource(getIcon(it.current.weather[0].icon))
+                if (lang == "en") {
+                    binding.tempTxt.text = it.current.temp.toInt().toString() + "°"
+                    binding.txtCloud.text = it.current.clouds.toString()
+                    binding.txtWind.text = it.current.wind_speed.toString()
+                    binding.txtPressure.text = it.current.pressure.toString()
+                    binding.txtHumidity.text = it.current.humidity.toString()
+                } else {
+                    binding.tempTxt.text = convertToArabic(it.current.temp.toInt()) + "°"
+                    binding.txtCloud.text = convertToArabic(it.current.clouds)
+                    binding.txtWind.text = convertToArabic(it.current.wind_speed.toInt())
+                    binding.txtPressure.text = convertToArabic(it.current.pressure)
+                    binding.txtHumidity.text = convertToArabic(it.current.humidity)
+                }
+
+                binding.rcItemDay.layoutManager =
+                    LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                binding.rcItemDay.hasFixedSize()
+                dayAdapter.updateDay(it.hourly)
+                binding.rcItemDay.adapter = dayAdapter
+
+                binding.rcItemWeek.layoutManager =
+                    LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                binding.rcItemWeek.hasFixedSize()
+                weekAdapter.updateWeek(it.daily)
+                binding.rcItemWeek.adapter = weekAdapter
+
             }
-            else{
-                binding.tempTxt.text = convertToArabic(it.current.temp.toInt())+"°"
-                binding.txtCloud.text =convertToArabic( it.current.clouds)
-                binding.txtWind.text = convertToArabic(it.current.wind_speed.toInt())
-                binding.txtPressure.text = convertToArabic(it.current.pressure.toInt())
-                binding.txtHumidity.text =convertToArabic( it.current.humidity.toInt())
+            else {
+                Toast.makeText(requireContext(), "wait collect location....", Toast.LENGTH_LONG).show()
             }
-
-            binding.rcItemDay.layoutManager =
-                LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            binding.rcItemDay.hasFixedSize()
-            dayAdapter.updateDay(it.hourly)
-            binding.rcItemDay.adapter = dayAdapter
-
-            binding.rcItemWeek.layoutManager =
-                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            binding.rcItemWeek.hasFixedSize()
-            weekAdapter.updateWeek(it.daily)
-            binding.rcItemWeek.adapter = weekAdapter
-
-
         }
     }
 
@@ -178,32 +209,23 @@ class WeatherFragment : Fragment() {
 
     }
 
-    private fun getCityText(lat: Double, lon: Double): String {
-        if(lang=="en")
-        {
-            var city = "Unknown!"
-            val geocoder = Geocoder(requireContext(), Locale("en"))
-            val addresses: List<Address> = geocoder.getFromLocation(lat, lon, 1)
-            if (addresses.isNotEmpty()) {
-                val state = addresses[0].adminArea
-                val country = addresses[0].countryName
-                city = "$state, $country"
-            }
-            return city
+    private fun getCityName(lat: Double, lon: Double): String {
+        var city = "Unknown!"
+        if (lang.equals("en")) {
+            geocoder = Geocoder(requireContext(), Locale("en"))
+        } else {
+            geocoder = Geocoder(requireContext(), Locale("ar"))
         }
-        else{
-            var city = "Unknown!"
-            val geocoder = Geocoder(requireContext(), Locale("ar"))
-            val addresses: List<Address> = geocoder.getFromLocation(lat, lon, 1)
-            if (addresses.isNotEmpty()) {
-                val state = addresses[0].adminArea
-                val country = addresses[0].countryName
-                city = "$state, $country"
-            }
-            return city
+        val addresses: List<Address> = geocoder.getFromLocation(lat, lon, 1)
+        Log.i("location", "getCityText: $lat + $lon + $addresses")
+        if (addresses.isNotEmpty()) {
+            val state = addresses[0].adminArea // damietta
+            val country = addresses[0].countryName
+            city = "$state, $country"
         }
-
+        return city
     }
+
     private fun setUnits(unit: String) {
         when (unit) {
             "metric" -> {
@@ -231,7 +253,8 @@ class WeatherFragment : Fragment() {
         config.setLocale(locale)
         resources.updateConfiguration(config, resources.displayMetrics)
     }
-    fun convertToArabic(value: Int): String? {
+
+    private fun convertToArabic(value: Int): String {
         return (value.toString() + "")
             .replace("1", "١").replace("2", "٢")
             .replace("3", "٣").replace("4", "٤")

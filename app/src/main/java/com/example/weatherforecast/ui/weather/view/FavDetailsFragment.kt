@@ -1,5 +1,6 @@
 package com.example.weatherforecast.ui.weather.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -13,7 +14,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherforecast.R
@@ -27,21 +27,20 @@ import java.util.*
 
 class FavDetailsFragment : Fragment() {
     private lateinit var binding: FragmentFavDetailsBinding
-    private lateinit var navController: NavController
-    private val viewModel: FavDetailsViewModel by viewModels<FavDetailsViewModel> {
+    val viewModel: FavDetailsViewModel by viewModels<FavDetailsViewModel> {
         FavViewModelFactory(Repository.getRepoInstance(requireActivity().application))
     }
-    val dayAdapter = FavDayAdater(arrayListOf())
-    val weekAdapter = FavWeekAdapter(arrayListOf())
+    private val dayAdapter = FavDayAdater(arrayListOf())
+    private val weekAdapter = FavWeekAdapter(arrayListOf())
     var livedata = MutableLiveData<WeatherRespond>()
     private lateinit var sharedPreferences: SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
+    private lateinit var editor: SharedPreferences.Editor
     lateinit var lat: String
     lateinit var lon: String
     lateinit var lang: String
     private lateinit var unit: String
     private lateinit var tempUnit: String
-    lateinit var windSpeedUnit: String
+    private lateinit var windSpeedUnit: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,15 +58,12 @@ class FavDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFavDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    companion object {
-
-    }
-
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val lat = requireArguments().getDouble("lat")
@@ -86,7 +82,7 @@ class FavDetailsFragment : Fragment() {
             )
             binding.txtDesc.text = it.current.weather[0].description
             binding.iconFeelLike.setImageResource(getIcon(it.current.weather[0].icon))
-            if(lang.equals("en")) {
+            if(lang == "en") {
                 binding.tempTxt.text = it.current.temp.toInt().toString() + "°"
                 binding.txtCloud.text = it.current.clouds.toString()
                 binding.txtWind.text = it.current.wind_speed.toString()
@@ -97,8 +93,8 @@ class FavDetailsFragment : Fragment() {
                 binding.tempTxt.text = convertToArabic(it.current.temp.toInt())+"°"
                 binding.txtCloud.text =convertToArabic( it.current.clouds)
                 binding.txtWind.text = convertToArabic(it.current.wind_speed.toInt())
-                binding.txtPressure.text = convertToArabic(it.current.pressure.toInt())
-                binding.txtHumidity.text =convertToArabic( it.current.humidity.toInt())
+                binding.txtPressure.text = convertToArabic(it.current.pressure)
+                binding.txtHumidity.text =convertToArabic(it.current.humidity)
             }
 
             binding.rcItemDay.layoutManager =
@@ -117,7 +113,7 @@ class FavDetailsFragment : Fragment() {
         }
     }
 
-    fun getIcon(icon: String): Int {
+    private fun getIcon(icon: String): Int {
         when (icon) {
             "01n" -> {
                 return R.drawable.a01n
@@ -226,7 +222,7 @@ class FavDetailsFragment : Fragment() {
         config.setLocale(locale)
         resources.updateConfiguration(config, resources.displayMetrics)
     }
-    fun convertToArabic(value: Int): String? {
+    private fun convertToArabic(value: Int): String {
         return (value.toString() + "")
             .replace("1", "١").replace("2", "٢")
             .replace("3", "٣").replace("4", "٤")

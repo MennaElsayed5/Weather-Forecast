@@ -7,14 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.Fav.view.MapsFragment"
     >
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:padding="8dp"
-        android:layout_margin="5dp"
-        android:text="save"
-        android:textColor="@color/teal_200" />
+        android:layout_gravity="bottom|right"
+        android:layout_margin="25dp"
+        android:src="@drawable/ic_add_black_24dp"
+        android:backgroundTint="@color/purple_200"
+
+        />
 </fragment>

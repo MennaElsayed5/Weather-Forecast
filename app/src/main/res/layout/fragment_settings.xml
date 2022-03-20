@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/images"
+    android:background="@drawable/uwp319288"
     android:orientation="vertical"
     android:weightSum="4"
     tools:context=".ui.settings.view.SettingsFragment">
@@ -26,6 +26,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="165dp"
             android:layout_height="match_parent"
+            android:background="#e3b9fb"
             android:padding="10dp"
             tools:layout_editor_absoluteX="31dp"
             tools:layout_editor_absoluteY="10dp">
@@ -37,8 +38,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/location"
+                android:textColor="@color/white"
                 android:textSize="20sp"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -49,6 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/gps"
+                android:textColor="@color/white"
+
                 app:layout_constraintEnd_toEndOf="@+id/radio_button_map"
                 app:layout_constraintStart_toStartOf="@+id/radio_button_map"
                 app:layout_constraintTop_toBottomOf="@+id/radio_button_map" />
@@ -58,6 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/map"
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/txtlang"
                 app:layout_constraintStart_toStartOf="@+id/txtlang"
                 app:layout_constraintTop_toBottomOf="@+id/txtlang" />
@@ -80,9 +84,12 @@
         app:layout_constraintStart_toEndOf="@+id/materialCardView2"
         app:layout_constraintTop_toTopOf="@+id/materialCardView2"
         app:layout_constraintVertical_bias="1.0">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#e3b9fb"
+
             android:padding="10dp">
 
 
@@ -92,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/language"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.8"
@@ -103,6 +111,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/arabic"
+                android:textColor="@color/white"
+
                 app:layout_constraintEnd_toEndOf="@+id/radio_button_en"
                 app:layout_constraintStart_toStartOf="@+id/radio_button_en"
                 app:layout_constraintTop_toBottomOf="@+id/radio_button_en" />
@@ -112,6 +122,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/english"
+                android:textColor="@color/white"
+
                 app:layout_constraintEnd_toEndOf="@+id/textlang"
                 app:layout_constraintStart_toStartOf="@+id/textlang"
                 app:layout_constraintTop_toBottomOf="@+id/textlang" />
@@ -136,6 +148,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#e3b9fb"
             android:padding="10dp">
 
 
@@ -145,7 +158,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/temperature"
+                android:textColor="@color/white"
                 android:textSize="20sp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.8"
                 app:layout_constraintStart_toStartOf="parent"
@@ -156,6 +171,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/kelvin"
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/radio_button_c"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/radio_button_c"
@@ -166,6 +182,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/celsius"
+
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/radio_button_f"
                 app:layout_constraintStart_toStartOf="@+id/radio_button_f"
                 app:layout_constraintTop_toBottomOf="@+id/radio_button_f" />
@@ -175,6 +193,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/fahrenheit"
+
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/text"
                 app:layout_constraintStart_toStartOf="@+id/text"
                 app:layout_constraintTop_toBottomOf="@+id/text" />

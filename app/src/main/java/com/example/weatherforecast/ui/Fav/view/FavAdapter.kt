@@ -70,6 +70,7 @@ class FavAdapter(
             navController.navigate(R.id.action_favFragment_to_favDetailsFragment,bundle)
         }
     }
+
     private fun getCityText(lat: Double, lon: Double): String {
         if(lang=="en")
         {

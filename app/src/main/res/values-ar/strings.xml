@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Weather Forecast</string>
+    <string name="app_name">حالة الطقس</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">الرئيسية</string>
@@ -10,9 +10,9 @@
     <string name="txt_weather">txt_weather</string>
     <string name="txt_time">txt_time</string>
     <string name="txt_day">txt_day</string>
-    <string name="txt_degree">txt_degree</string>
+    <string name="txt_degree">الدرجة</string>
     <string name="cloud">السحب</string>
-    <string name="txt_cloud">txt_cloud</string>
+    <string name="txt_cloud">السحاب</string>
     <string name="wind">الرياح</string>
     <string name="pressure">الضغط</string>
     <string name="humidity">الرطوبة</string>
@@ -29,13 +29,8 @@
     <string name="meter_sec">متر/الثانية</string>
     <string name="miles_hour">مللي/الساعة</string>
     <string name="wind_speed">سرعة الرياح</string>
-    <string name="Saturday" />
-    <string name="Sunday" />
-    <string name="Monday" />
-    <string name="Tuesday" />
-    <string name="Wednesday" />
-    <string name="Friday" />
-    <string name="Thursday" />
-    <string name="maxdegree">maxDegree</string>
-    <string name="desc">desc</string>
+    <string name="maxdegree">الدرجة العظمي</string>
+    <string name="desc">الوصف</string>
+    <string name="title_activity_splash">حالة الطقس</string>
+    <string name="weather_forecast" >حالة الطقس</string>
 </resources>
