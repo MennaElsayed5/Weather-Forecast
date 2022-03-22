@@ -81,7 +81,6 @@ class Repository private constructor(
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     localData.insert(response.body())
-                    //  weatherLiveData.postValue(response.body())
                 }
             }
         }

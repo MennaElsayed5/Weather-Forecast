@@ -22,7 +22,8 @@ object NetworkApi : RemoteDataSource {
         exclude: String,
         units: String,
         lang: String
-    ): Response<WeatherRespond> = getCurrentData().getCurrentWeatherData(lat, lon, exclude, units, lang)
+    ): Response<WeatherRespond> =
+        getCurrentData().getCurrentWeatherData(lat, lon, exclude, units, lang)
 
 
 }

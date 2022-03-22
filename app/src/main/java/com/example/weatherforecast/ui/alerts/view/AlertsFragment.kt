@@ -43,7 +43,6 @@ class AlertsFragment : Fragment() {
     private lateinit var dialog: Dialog
     private var calStart = Calendar.getInstance()
     private var calEnd = Calendar.getInstance()
-//    private var sharedPreferences:SharedPreferences=requireContext().getSharedPreferences("permission", Context.MODE_PRIVATE)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -97,13 +96,7 @@ class AlertsFragment : Fragment() {
                 }.show()
         }
     }
-//    private fun setNotFirstTime() {
-//      sharedPreferences.edit().putBoolean("permission", false).apply()
-//    }
-//
-//    private fun checkFirstTime(): Boolean {
-//        return sharedPreferences.getBoolean("permission", true)
-//    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[AlertsViewModel::class.java]

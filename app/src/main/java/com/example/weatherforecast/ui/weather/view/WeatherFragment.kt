@@ -60,32 +60,40 @@ class WeatherFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        gpsLocation.findDeviceLocation(requireActivity())
-        sharedPreferences = requireActivity().getSharedPreferences("weather", Context.MODE_PRIVATE)
-        editor = sharedPreferences.edit()
-        lat = sharedPreferences.getString("lat", "0").toString()
-        lon = sharedPreferences.getString("lon", "0").toString()
-        lang = sharedPreferences.getString("lang", "en").toString()
-        unit = sharedPreferences.getString("units", "metric").toString()
-        location = sharedPreferences.getString("location", "GPS").toString()
-        setLocale(lang)
-        setUnits(unit)
+//        gpsLocation.findDeviceLocation(requireActivity())
+//        sharedPreferences = requireActivity().getSharedPreferences("weather", Context.MODE_PRIVATE)
+//        editor = sharedPreferences.edit()
+//        lang = sharedPreferences.getString("lang", "en").toString()
+//        unit = sharedPreferences.getString("units", "metric").toString()
+//        lat = sharedPreferences.getString("lat", "0").toString()
+//        lon = sharedPreferences.getString("lon", "0").toString()
+//        location = sharedPreferences.getString("location", "GPS").toString()
+//        setLocale(lang)
+//        setUnits(unit)
 //        editor.commit()
 
     }
-
-
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPreferences = requireActivity().getSharedPreferences("weather", Context.MODE_PRIVATE)
+        editor = sharedPreferences.edit()
+        lang = sharedPreferences.getString("lang", "en").toString()
+        unit = sharedPreferences.getString("units", "metric").toString()
+        lat = sharedPreferences.getString("lat", "0").toString()
+        lon = sharedPreferences.getString("lon", "0").toString()
+        location = sharedPreferences.getString("location", "GPS").toString()
+        setLocale(lang)
+        setUnits(unit)
         if (Helper.isNetworkAvailable(requireContext())) {
-
             if (lat.equals("0") || lon.equals("0")) {
+                gpsLocation.findDeviceLocation(requireActivity())
                 gpsLocation.locationList.observe(viewLifecycleOwner){
                     if(!it.isNullOrEmpty()){
+                        Log.i(TAG, "onViewCreated: unit"+unit)
                         viewModel.insertWeatherData(
-                            gpsLocation.getLatitude().toString(),
-                            gpsLocation.getLongitude().toString(),
+                            it[0],
+                            it[1],
                             "minutely",
                             unit,
                             lang
@@ -110,42 +118,46 @@ class WeatherFragment : Fragment() {
         }
 
         viewModel.liveDataWeather.observe(viewLifecycleOwner) {
-            if (it != null) {
+//            if (it != null) {
                 if (lat .equals("0") || lon.equals("0")) {
                     binding.cityName.text = getCityName(gpsLocation.getLatitude()!!.toDouble(),
                         gpsLocation.getLongitude()!!.toDouble())
                 } else {
-                    binding.cityName.text = getCityName(it.lat,it.lon)
-                }
-                binding.txtDesc.text = it.current.weather[0].description
-                binding.iconFeelLike.setImageResource(getIcon(it.current.weather[0].icon))
-                if (lang == "en") {
-                    binding.tempTxt.text = it.current.temp.toInt().toString() + "°"
-                    binding.txtCloud.text = it.current.clouds.toString()
-                    binding.txtWind.text = it.current.wind_speed.toString()
-                    binding.txtPressure.text = it.current.pressure.toString()
-                    binding.txtHumidity.text = it.current.humidity.toString()
-                } else {
-                    binding.tempTxt.text = convertToArabic(it.current.temp.toInt()) + "°"
-                    binding.txtCloud.text = convertToArabic(it.current.clouds)
-                    binding.txtWind.text = convertToArabic(it.current.wind_speed.toInt())
-                    binding.txtPressure.text = convertToArabic(it.current.pressure)
-                    binding.txtHumidity.text = convertToArabic(it.current.humidity)
+                    binding.cityName.text = getCityName(lat.toDouble(),lon.toDouble())
                 }
 
-                binding.rcItemDay.layoutManager =
-                    LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-                binding.rcItemDay.hasFixedSize()
-                dayAdapter.updateDay(it.hourly)
-                binding.rcItemDay.adapter = dayAdapter
+                if(it !=null){
+                    Log.i(TAG, "onViewCreated:obser "+unit)
+                    binding.txtDesc.text = it.current.weather[0].description
+                    binding.iconFeelLike.setImageResource(getIcon(it.current.weather[0].icon))
+                    if (lang == "en") {
+                        binding.tempTxt.text = it.current.temp.toString() + "°"
+                        binding.txtCloud.text = it.current.clouds.toString()
+                        binding.txtWind.text = it.current.wind_speed.toString()
+                        binding.txtPressure.text = it.current.pressure.toString()
+                        binding.txtHumidity.text = it.current.humidity.toString()
+                    } else {
+                        binding.tempTxt.text = convertToArabic(it.current.temp.toInt()) + "°"
+                        binding.txtCloud.text = convertToArabic(it.current.clouds)
+                        binding.txtWind.text = convertToArabic(it.current.wind_speed.toInt())
+                        binding.txtPressure.text = convertToArabic(it.current.pressure)
+                        binding.txtHumidity.text = convertToArabic(it.current.humidity)
+                    }
 
-                binding.rcItemWeek.layoutManager =
-                    LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                binding.rcItemWeek.hasFixedSize()
-                weekAdapter.updateWeek(it.daily)
-                binding.rcItemWeek.adapter = weekAdapter
+                    binding.rcItemDay.layoutManager =
+                        LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                    binding.rcItemDay.hasFixedSize()
+                    dayAdapter.updateDay(it.hourly)
+                    binding.rcItemDay.adapter = dayAdapter
 
-            }
+                    binding.rcItemWeek.layoutManager =
+                        LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                    binding.rcItemWeek.hasFixedSize()
+                    weekAdapter.updateWeek(it.daily)
+                    binding.rcItemWeek.adapter = weekAdapter
+
+                }
+
             else {
                 Toast.makeText(requireContext(), "wait collect location....", Toast.LENGTH_LONG).show()
             }
@@ -217,9 +229,8 @@ class WeatherFragment : Fragment() {
             geocoder = Geocoder(requireContext(), Locale("ar"))
         }
         val addresses: List<Address> = geocoder.getFromLocation(lat, lon, 1)
-        Log.i("location", "getCityText: $lat + $lon + $addresses")
         if (addresses.isNotEmpty()) {
-            val state = addresses[0].adminArea // damietta
+            val state = addresses[0].adminArea
             val country = addresses[0].countryName
             city = "$state, $country"
         }

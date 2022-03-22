@@ -20,17 +20,9 @@ class GPSLocation {
     private var locationManager: LocationManager? = null
     private var latitude: String? = null
     private var longitude: String? = null
-    fun initPermissions(activity: Activity?) {
-        ActivityCompat.requestPermissions(
-            activity!!,
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            REQUEST_LOCATION
-        )
-    }
 
     fun findDeviceLocation(activity: Activity) {
         locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        //Check gps is enable or not
         if (!locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             gpsEnable(activity)
         } else {

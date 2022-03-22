@@ -50,9 +50,9 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val lang = sharedPref.getString("lang", "en")
         val unit = sharedPref.getString("units", "metric")
-       val lat = sharedPref.getString("lat", "0").toString()
-       val lon = sharedPref.getString("lon", "0").toString()
-        var location = sharedPref.getString("location", "GPS")
+        val lat = sharedPref.getString("lat", "0").toString()
+        val lon = sharedPref.getString("lon", "0").toString()
+//        var location = sharedPref.getString("location", "GPS")
         when (lang) {
             "en" -> binding.radioButtonEn.isChecked = true
             "ar" -> binding.radioButtonAr.isChecked = true
@@ -62,11 +62,25 @@ class SettingsFragment : Fragment() {
             "imperial" -> binding.radioButtonF.isChecked = true
             "standard" -> binding.radioButtonK.isChecked = true
         }
+//        if (unit == "metric") {
+//            binding.radioButtonC.isChecked = true
+//            binding.radioButtonF.isChecked = false
+//            binding.radioButtonK.isChecked = false
+//        } else if (unit == "imperial") {
+//            binding.radioButtonF.isChecked = true
+//            binding.radioButtonC.isChecked = false
+//            binding.radioButtonK.isChecked = false
+//
+//        } else {
+//            binding.radioButtonK.isChecked = true
+//            binding.radioButtonF.isChecked = false
+//            binding.radioButtonC.isChecked = false
+//        }
 
-        if(lat=="0"&&lon=="0"){
+        if (lat == "0" && lon == "0") {
             binding.radioButtonGps.isChecked = true
 
-        }else{
+        } else {
             binding.radioButtonMap.isChecked = true
         }
         binding.radioButtonEn.setOnClickListener {
@@ -76,13 +90,20 @@ class SettingsFragment : Fragment() {
             changeLang("ar")
         }
         binding.radioButtonC.setOnClickListener {
+//            binding.radioButtonF.isChecked = false
+//            binding.radioButtonK.isChecked = false
             changeUnit("metric")
+
         }
         binding.radioButtonK.setOnClickListener {
             changeUnit("standard")
+//            binding.radioButtonC.isChecked = false
+//            binding.radioButtonF.isChecked = false
         }
         binding.radioButtonF.setOnClickListener {
             changeUnit("imperial")
+//            binding.radioButtonK.isChecked = false
+//            binding.radioButtonC.isChecked = false
         }
         binding.radioButtonMap.setOnClickListener {
             Navigation.findNavController(view)
@@ -91,9 +112,8 @@ class SettingsFragment : Fragment() {
 
         }
         binding.radioButtonGps.setOnClickListener {
-//            gpsLocation.findDeviceLocation(requireActivity())
             editor.putString("lat", "0")
-           editor.putString("lon", "0")
+            editor.putString("lon", "0")
             editor.apply()
             Navigation.findNavController(view)
                 .navigate(SettingsFragmentDirections.actionSettingsFragmentToWeatherFragment())
@@ -105,25 +125,23 @@ class SettingsFragment : Fragment() {
 
     private fun changeLang(lang: String) {
         editor.putString("lang", lang)
-        editor.commit()
-        settingViewModel.refreshData()
+        editor.apply()
+//        settingViewModel.refreshData()
         setLocale(lang)
         restartApp()
     }
 
     private fun changeUnit(unit: String) {
         editor.putString("units", unit)
-        editor.commit()
-        settingViewModel.refreshData()
+        editor.apply()
+//        settingViewModel.refreshData()
         restartApp()
     }
 
     private fun restartApp() {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
-        Runtime.getRuntime().exit(0)
 
+        startActivity(requireActivity().intent)
+        requireActivity().finish()
     }
 
     private fun setLocale(languageCode: String?) {
